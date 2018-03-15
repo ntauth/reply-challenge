@@ -54,39 +54,13 @@ public class App
         		throw new IllegalArgumentException("Invalid filter");
         }
         
-        // Declare the structures
-        // @todo: remove the hardcoded maps asap
-        Map<String, Integer> rsrc0r = new HashMap<String, Integer>() {{
-        	put("cpu", 3);
-        	put("mem", 4);
-        }};
-        Map<String, Integer> rsrc1r = new HashMap<String, Integer>() {{
-        	put("cpu", 10);
-        	put("mem", 2);
-        }};
-        Map<String, Integer> rsrc0 = new HashMap<String, Integer>() {{
-        	put("cpu", 15);
-        	put("mem", 4);
-        }};
-        Map<String, Integer> rsrc1 = new HashMap<String, Integer>() {{
-        	put("cpu", 7);
-        	put("mem", 24);
-        }};
-        Map<String, Integer> lat0 = new HashMap<String, Integer>() {{
-        	put("IT", 43);
-        	put("DE", 170);
-        }};
-        Map<String, Integer> lat1 = new HashMap<String, Integer>() {{
-        	put("IT", 119);
-        	put("DE", 16);
-        }};
+        // Parse File
+        ParseFile.parseFile("first_adventure.in");
         
-        List<Project>  proj = Arrays.asList(new Project("IT", 100, rsrc0r), new Project("DE", 10000, rsrc1r));
-        List<Region>   rgns = Arrays.asList(new Region("Amazon", "Milano", rsrc0, lat0, 0.4f, 30), new Region("Microsoft", "Berlin", rsrc1, lat1, 0.8f, 42));
+        // Declare the structures and fill them
+        List<Project>  proj = ParseFile.progetti;
+        List<Region>   rgns = ParseFile.ret;
         List<Purchase> outp = new ArrayList<Purchase>();
-        
-        // @todo: Stub code for raw data to list conversion
-        // IMPLEMENT ME!
         
         // Sort the projects by filter
         final EnumSet<GreedyFilter> filter_ = filter;
@@ -141,6 +115,8 @@ public class App
         	boolean didAlloc = false;
         	int rgnIdx = 0;
         	
+    		Purchase prch = new Purchase(prj, new HashMap<Region, Integer>());
+    		
         	while (!didAlloc && rgnIdx < rgns.size())
         	{
         		// Pop the rgnIdx'th best region
@@ -157,8 +133,6 @@ public class App
         		
         		// Something went wrong. Dataset is ill-formed?
         		assert maxK != -1;
-        		
-        		Purchase prch = new Purchase(prj, new HashMap<Region, Integer>());
         		
         		// Is allocation request satisfiable?
         		if (maxK <= rgn.packages)
