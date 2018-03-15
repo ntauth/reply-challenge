@@ -1,9 +1,12 @@
-Reply Challenge 2018 - Team "Team.setName("Ψduck");"
+Reply Challenge 2018
 ====================================================
 
 Introduction
 --------------------
 This repository contains our team's attempt at Reply Challenge 2018 assignment.
+
+Abstract
+--------------------
 
 License
 --------------------
